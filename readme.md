@@ -79,7 +79,7 @@ A tool to summarise PDF documents, preserving important elements like code block
 ### Steps
 
 #### Clone the Repository
-git clone https://github.com/yourusername/pdf-summariser-app.git
+git clone https://github.com/Tennisee-data/Max_Agent/pdf-summariser-app.git
 cd pdf-summariser-app
 
 #### Create a Virtual Environment
