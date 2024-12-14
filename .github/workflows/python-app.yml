@@ -13,6 +13,9 @@ permissions:
   contents: read
 
 jobs:
+  - name: Remove Python cache
+  run: find . -name "*.pyc" -delete
+
   build:
 
     runs-on: ubuntu-latest
