@@ -3,6 +3,7 @@ import pdfplumber
 import re
 import logging
 from fpdf import FPDF
+from wordsegment import load, segment
 
 class PDFProcessor:
     def __init__(self, font_dir, cleaned_text_dir=None):
@@ -24,26 +25,16 @@ class PDFProcessor:
         except Exception as e:
             logging.error(f"Failed to extract text from {pdf_path}: {e}")
             return []
-
+    # Load the WordSegment model
+    load()
+    
     def separate_glued_words(self, text):
-        # A function to separate wordsthatareglued together
-        # Add space between lowercase followed by uppercase (e.g., "PatternRecognition" -> "Pattern Recognition")
-        text = re.sub(r'([a-z])([A-Z])', r'\1 \2', text)
-    
-        # Add space between uppercase letters followed by lowercase letters (e.g., "ATest" -> "A Test")
-        text = re.sub(r'([A-Z])([A-Z][a-z])', r'\1 \2', text)
-    
-        # Add space between letters and numbers (both directions)
-        text = re.sub(r'([a-zA-Z])(\d)', r'\1 \2', text)
-        text = re.sub(r'(\d)([a-zA-Z])', r'\1 \2', text)
-    
-        # Add space between glued lowercase words (e.g., "Hopeitworksforyou" -> "Hope it works for you")
-        text = re.sub(r'([a-z])([A-Z][a-z])', r'\1 \2', text)
-    
-        # Normalize spaces
-        text = re.sub(r'\s{2,}', ' ', text).strip()
-    
-        return text
+        # Use WordSegment to segment glued words
+        segmented = segment(text)
+        
+        # Normalize spacing and return segmented text
+        return " ".join(segmented)
+
 
 
     def clean_text(self, text):
