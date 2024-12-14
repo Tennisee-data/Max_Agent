@@ -26,22 +26,25 @@ class PDFProcessor:
             return []
 
     def separate_glued_words(self, text):
-        # Handle glued words where lowercase is followed by uppercase (e.g., PatternRecognition)
+        # A function to separate wordsthatareglued together
+        # Add space between lowercase followed by uppercase (e.g., "PatternRecognition" -> "Pattern Recognition")
         text = re.sub(r'([a-z])([A-Z])', r'\1 \2', text)
-
-        # Handle glued numbers and letters (both directions, e.g., "text123" or "123text")
+    
+        # Add space between uppercase letters followed by lowercase letters (e.g., "ATest" -> "A Test")
+        text = re.sub(r'([A-Z])([A-Z][a-z])', r'\1 \2', text)
+    
+        # Add space between letters and numbers (both directions)
         text = re.sub(r'([a-zA-Z])(\d)', r'\1 \2', text)
         text = re.sub(r'(\d)([a-zA-Z])', r'\1 \2', text)
-
-        # Fix missing spaces around punctuation (without overcorrecting)
-        text = re.sub(r'([.,;:!?])([^\s\w])', r'\1 \2', text)  # Punctuation followed by non-space or non-word
-        text = re.sub(r'([^\s\w])([.,;:!?])', r'\1 \2', text)  # Non-space or non-word followed by punctuation
-        text = re.sub(r'([.,;:!?])([a-zA-Z])', r'\1 \2', text)  # Punctuation followed by letter
-
-        # Normalize excessive spaces (ensure no trailing spaces)
+    
+        # Add space between glued lowercase words (e.g., "Hopeitworksforyou" -> "Hope it works for you")
+        text = re.sub(r'([a-z])([A-Z][a-z])', r'\1 \2', text)
+    
+        # Normalize spaces
         text = re.sub(r'\s{2,}', ' ', text).strip()
-
+    
         return text
+
 
     def clean_text(self, text):
         # Remove single newlines that break sentences but preserve paragraph breaks (double newlines)
