@@ -1,0 +1,14 @@
+# config.yaml
+input_directory: "./pdfs/"
+output_directory: "./summarised_pdfs/"
+cleaned_text_directory: "./cleaned_texts/"
+font_directory: "./dejavu-sans/"
+processed_files_log: "./processed_pdfs.txt"
+log_file: "pdf_summariser.log"
+summarization_model_id: "facebook/bart-large-cnn"
+first_min_ratio: 0.25
+first_max_ratio: 0.45
+second_min_ratio: 0.60
+second_max_ratio: 0.80
+max_tokens: 1024
+do_sample: false

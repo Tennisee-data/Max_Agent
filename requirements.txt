@@ -1,0 +1,8 @@
+fpdf==1.7.2
+pdfplumber==0.11.4
+PyYAML==6.0.2
+torch
+transformers==4.47.0
+
+# Optional
+# intel_extension_for_pytorch==2.5.0
